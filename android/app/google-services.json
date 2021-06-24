@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "731352365581",
+    "project_id": "vagabond-d11d9",
+    "storage_bucket": "vagabond-d11d9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731352365581:android:b9cca0d13e366ee25fb344",
+        "android_client_info": {
+          "package_name": "com.vagabond"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "731352365581-qn86t18ig64gd843pippmfi7h7b8lc38.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8evMpJJ0aVRmeyOu_RMZZ7fNVH8vQwiI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "731352365581-qn86t18ig64gd843pippmfi7h7b8lc38.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
