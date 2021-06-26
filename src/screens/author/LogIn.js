@@ -1,5 +1,19 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, StatusBar, SafeAreaView} from 'react-native';
+import { 
+  StyleSheet,
+  Text,
+  View, 
+  TextInput, 
+  TouchableOpacity, 
+  StatusBar, 
+  SafeAreaView,
+  ActivityIndicator,
+  Alert,
+} from 'react-native';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import RNRestart from 'react-native-restart';
+import ModalActivityIndicator from 'react-native-modal-activityindicator';
 
 import API from '../../utils/api';
 
@@ -9,25 +23,52 @@ export default class LogIn extends React.Component {
     this.state = {
       phone: '',
       password: '',
+      isLoading: false,
     };
   }
-  isValid(){
+  validated(){
     return this.state.phone === '' || this.state.password === '';
   }
   onLogin() {
     const { phone, password } = this.state;
-    console.log('Credentials', `${phone} + ${password}`);
     //login [POST]
+    this.setState({isLoading: true});
     API.post('/login', {phone: phone, password: password})
-    .then(res => console.log(res.data))
+    .then(res =>{
+      if(res.data.status ==200){
+        this.successLogin({user: res.data.user, jwt: res.data.jwt});
+      }
+      else if(res.data.status == 401){
+        Alert.alert('Login failed', `${res.data.message}`);
+      }
+    })
+    .then(()=>{
+      this.setState({isLoading: false});
+    })
     .catch(error => console.log(error))
   }
 
-  render(){  
+  async successLogin(data){
+     try {
+      await AsyncStorage.setItem('@token_user', data.jwt);
+      RNRestart.Restart();
+     } catch (error) {
+       console.log(error);
+     }
+  }
+
+  goToSignUp() {
+      this.props.navigation.navigate('SignUp')
+  }
+  goToResetPassword() {
+    this.props.navigation.navigate('ResetPassword')
+  }
+  render(){
     return (
       <View style={styles.container}>
         <SafeAreaView>
           <StatusBar backgroundColor="#003f5c" />
+          <ActivityIndicator />
         </SafeAreaView>
         <Text style={styles.logo}>Vagabond</Text>
         <View style={styles.inputView} >
@@ -51,21 +92,24 @@ export default class LogIn extends React.Component {
             placeholderTextColor="#003f5c"
           />
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={this.goToResetPassword.bind(this)}
+        >
           <Text style={styles.forgot}>Forgot Password?</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          disabled={this.isValid()}
-          style={this.isValid()?[styles.loginBtn, {opacity:0.2}]:styles.loginBtn}
+          disabled={this.validated()}
+          style={this.validated()?[styles.loginBtn, {opacity:0.2}]:styles.loginBtn}
           onPress={this.onLogin.bind(this)}
         >
-          <Text style={styles.loginText}>LOGIN</Text>
+          <Text style={styles.loginText}>Login</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={styles.loginText}>Signup</Text>
+        <TouchableOpacity
+          onPress={this.goToSignUp.bind(this)}
+        >
+          <Text style={styles.loginText}>Register</Text>
         </TouchableOpacity>
-
-  
+        <ModalActivityIndicator visible={this.state.isLoading} size='large' color='white' />
       </View>
     );
   }
@@ -77,6 +121,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#003f5c',
     alignItems: 'center',
     justifyContent: 'center',
+    position: 'relative'
   },
   logo:{
     fontWeight:"bold",
@@ -114,5 +159,5 @@ const styles = StyleSheet.create({
   },
   loginText:{
     color:"white"
-  }
+  },
 });
