@@ -26,7 +26,7 @@ export default class LogIn extends React.Component {
       isLoading: false,
     };
   }
-  validated(){
+  _validated(){
     return this.state.phone === '' || this.state.password === '';
   }
   onLogin() {
@@ -58,7 +58,7 @@ export default class LogIn extends React.Component {
   }
 
   goToSignUp() {
-      this.props.navigation.navigate('SignUp')
+    this.props.navigation.navigate('SignUp')
   }
   goToResetPassword() {
     this.props.navigation.navigate('ResetPassword')
@@ -98,8 +98,8 @@ export default class LogIn extends React.Component {
           <Text style={styles.forgot}>Forgot Password?</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          disabled={this.validated()}
-          style={this.validated()?[styles.loginBtn, {opacity:0.2}]:styles.loginBtn}
+          disabled={this._validated()}
+          style={this._validated()?[styles.loginBtn, {opacity:0.2}]:styles.loginBtn}
           onPress={this.onLogin.bind(this)}
         >
           <Text style={styles.loginText}>Login</Text>

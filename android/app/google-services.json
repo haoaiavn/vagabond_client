@@ -7,12 +7,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:731352365581:android:b9cca0d13e366ee25fb344",
+        "mobilesdk_app_id": "1:731352365581:android:49417b7a6298aa8d5fb344",
         "android_client_info": {
           "package_name": "com.vagabond"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "731352365581-hvessvkshtd0han6hqm7crpfn6p7u0nj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vagabond",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
         {
           "client_id": "731352365581-qn86t18ig64gd843pippmfi7h7b8lc38.apps.googleusercontent.com",
           "client_type": 3

@@ -34,11 +34,6 @@ export default class RootStack extends React.Component{
     }
   }
   render(){
-    <View>
-      <SafeAreaView>
-        <StatusBar backgroundColor="#003f5c" />
-      </SafeAreaView>
-    </View>
     if(this.state.isLoading){
       return(
         <SplashScreen/>
